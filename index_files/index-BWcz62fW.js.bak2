@@ -5822,24 +5822,6 @@ const initialStats = {
         cost: 4500,
         name: "独间公寓",
         description: "一个属于自己的小单间"
-    },
-    4: {
-        sanMax: 160,
-        cost: 12000,
-        name: "豪华公寓",
-        description: "曼哈顿高层公寓，落地窗看城市天际线"
-    },
-    5: {
-        sanMax: 200,
-        cost: 35000,
-        name: "联排别墅",
-        description: "郊区大House，有花园和车库"
-    },
-    6: {
-        sanMax: 250,
-        cost: 80000,
-        name: "海景豪宅",
-        description: "Malibu海滨豪宅，无边泳池，私人沙滩"
     }
 }
   , diet$1 = {
@@ -5863,38 +5845,26 @@ const initialStats = {
         moneyCost: 600,
         name: "注重健康",
         description: "营养均衡，适度改善"
-    },
-    4: {
-        sanCost: 5,
-        healthChange: 25,
-        moneyCost: 2000,
-        name: "私人厨师",
-        description: "米其林大厨定制营养餐，有机食材空运"
-    },
-    5: {
-        sanCost: 3,
-        healthChange: 40,
-        moneyCost: 5000,
-        name: "顶级养生",
-        description: "私人营养师+顶级食材，活到120岁的饮食方案"
     }
 }
   , creditDecay = -10
   , game = {
-    totalRounds: 9999
+    totalRounds: 12
 }
-  , sanEfficiency = new Proxy({}, {
-    get: function(target, prop) {
-        var n = parseInt(prop);
-        if (isNaN(n)) return undefined;
-        if (n <= 5) return 1;
-        if (n <= 8) return 1.05;
-        if (n <= 12) return 1.1;
-        if (n <= 24) return 1.15;
-        if (n <= 36) return 1.2;
-        return 1.25;
-    }
-})
+  , sanEfficiency = {
+    1: 1,
+    2: 1,
+    3: 1,
+    4: 1,
+    5: 1,
+    6: 1.05,
+    7: 1.05,
+    8: 1.05,
+    9: 1.1,
+    10: 1.1,
+    11: 1.1,
+    12: 1.1
+}
   , constants = {
     initialStats,
     monsterDamage,
@@ -5917,21 +5887,9 @@ const initialStats = {
             7: "抉择时刻",
             8: "中期考验",
             9: "压力升级",
-            10: "逆风翻盘",
-            11: "新的开始",
-            12: "扎根美国",
-            13: "阶层跃迁",
-            14: "资本积累",
-            15: "投资帝国",
-            16: "社会名流",
-            17: "政治捐款",
-            18: "慈善晚宴",
-            19: "家族基业",
-            20: "美国贵族",
-            21: "跨国布局",
-            22: "影响力",
-            23: "传承之路",
-            24: "永恒遗产"
+            10: "最后冲刺",
+            11: "终极考验",
+            12: "终局"
         }
     },
     sanityBright: 60,
@@ -6112,7 +6070,7 @@ const useGameStore = defineStore("game", {
         monthsLeft: t => Math.max(0, LOOP_CONFIG.totalMonths - t.s.loop.month + 1),
         yearPhaseText: t => {
             const n = t.s.loop.month;
-            return n <= 12 ? "第一年：混乱期（The Chaos）" : n <= 24 ? "第二年：崛起期（The Rise）" : n <= 36 ? "第三年：巅峰期（The Peak）" : n <= 48 ? "第四年：帝国期（The Empire）" : n <= 60 ? "第五年：统治期（The Dominion）" : "第" + Math.ceil(n/12) + "年：永恒传奇（The Eternal Legacy）"
+            return n <= 12 ? "第一年：混乱期（The Chaos）" : n <= 24 ? "第二年：麻木期（The Numbness）" : "第三年：崩塌期（The Collapse）"
         }
     },
     actions: {}
@@ -51910,343 +51868,6 @@ Day 7: 中暑了，去急诊，账单四位数
 
 [帖子已锁定：讨论过于消极，不符合社区氛围]`
     }
-}
-, {
-    round: 13,
-    month: "Year2-January",
-    name: "新起点",
-    theme: "🔄 重生",
-    difficulty: 3,
-    damage: 60,
-    openingNarrative: `第二年。
-
-你活过了第一年。
-
-这本身就是一种胜利。
-
-新的一年，你决定不再只是"活着"。
-
-你要"活出来"。
-
-桌上放着一张写满计划的纸——
-
-创业？投资？升职？买房？
-
-不管选哪条路，你已经不再是那个刚下飞机的菜鸟了。
-
-你是一个幸存者，现在要成为赢家。`,
-    rumor: {
-        title: "第二年的心态",
-        content: "Reddit帖子：「来美国第二年的人，心态都变了」\n\n——\n\n「第一年是survive，第二年开始才是live」 [5千赞]\n\n「第一年学会了省钱，第二年学会了赚钱」 [3千赞]"
-    }
-}, {
-    round: 14,
-    month: "Year2-February",
-    name: "资本游戏",
-    theme: "💎 投资",
-    difficulty: 3,
-    damage: 65,
-    openingNarrative: `你开始研究投资。
-
-股票、基金、房地产、加密货币。
-
-每个人都在告诉你不同的"财富密码"。
-
-你翻开了一本《穷爸爸富爸爸》——
-
-一个中国移民在美国读一本日裔美国人写的关于如何用钱赚钱的书。
-
-多么美国的画面。`,
-    rumor: {
-        title: "投资入门",
-        content: "Reddit帖子：「新移民应该怎么开始投资？」\n\n——\n\n「All in SPY，不要想太多」 [1万赞]\n\n「我把所有积蓄投了比特币，现在开保时捷」 [8千赞]\n\n「我把所有积蓄投了比特币，现在睡车里」 [1.2万赞]"
-    }
-}, {
-    round: 15,
-    month: "Year2-March",
-    name: "阶层意识",
-    theme: "👔 跃迁",
-    difficulty: 3,
-    damage: 60,
-    openingNarrative: `你第一次走进了一家高档餐厅。
-
-不是为了打工，而是为了吃饭。
-
-周围的人都穿着得体，谈论着高尔夫和度假。
-
-你低头看了看自己——
-
-西装是TJ Maxx买的，但至少熨过了。
-
-你点了一份$80的牛排。
-
-第一口咬下去的时候，你突然明白了：
-
-这就是他们一直在保护的东西——
-
-不是牛排，是坐在这里吃牛排的资格。`,
-    rumor: {
-        title: "阶层跃迁",
-        content: "Reddit帖子：「从底层到中产需要多久？」\n\n——\n\n「技术路线3-5年，创业路线要么3个月要么永远」 [6千赞]"
-    }
-}, {
-    round: 16,
-    month: "Year2-April",
-    name: "美国梦",
-    theme: "🏠 扎根",
-    difficulty: 4,
-    damage: 70,
-    openingNarrative: `你站在一栋房子前面。
-
-你的房子。
-
-或者说，银行的房子。但法律上写着你的名字。
-
-钥匙在手里，沉甸甸的。
-
-推开门的那一刻，你想起了刚来美国时住的那间床位——
-
-翻个身都会碰到隔壁老哥的脚。
-
-现在，你有了自己的客厅、厨房、和后院。
-
-后院甚至有棵树。
-
-你坐在树下，给家里打了个电话。
-
-"妈，我在美国买房了。"
-
-电话那头沉默了五秒，然后传来了抽泣声。`,
-    rumor: {
-        title: "买房记",
-        content: "Reddit帖子：「移民买房经验分享」\n\n——\n\n「建议：买在好学区，以后孩子上学省心」 [3千赞]\n\n「美国的房产税会让你重新定义\"拥有\"这个词」 [5千赞]"
-    }
-}, {
-    round: 17,
-    month: "Year2-May",
-    name: "权力游戏",
-    theme: "🏛️ 影响力",
-    difficulty: 4,
-    damage: 70,
-    openingNarrative: `有人找你"聊聊"。
-
-不是普通的聊天——
-
-是那种在高尔夫球场上、威士忌杯边的"聊聊"。
-
-他们看到了你的成功故事：移民、白手起家、小有成就。
-
-"你有没有想过，为社区做点什么？"
-
-你知道他们在说什么。
-
-政治。权力。美国的另一场游戏。`,
-    rumor: {
-        title: "华人参政",
-        content: "Reddit帖子：「为什么华人应该参与政治？」\n\n——\n\n「不参与规则制定，就只能被规则制定」 [8千赞]"
-    }
-}, {
-    round: 18,
-    month: "Year2-June",
-    name: "传承",
-    theme: "👨‍👩‍👧‍👦 家族",
-    difficulty: 3,
-    damage: 55,
-    openingNarrative: `夏天。
-
-你站在自家后院，看着孩子们在草坪上跑。
-
-（或者计划着未来的孩子。）
-
-你开始思考一些以前从不会想的问题——
-
-信托基金、遗产规划、家族基业。
-
-你爸妈当年让你出国，赌的就是这一刻。
-
-三代人的努力，从小镇到太平洋的另一边。
-
-你不仅要活着，还要确保下一代活得更好。
-
-这不就是最原始的美国梦吗？`,
-    rumor: {
-        title: "移民二代",
-        content: "Reddit帖子：「移民一代和二代的区别」\n\n——\n\n「一代拼命赚钱，二代拼命花钱。这就是进步。」 [4千赞]"
-    }
-}, {
-    round: 19,
-    month: "Year2-July",
-    name: "独立日",
-    theme: "🗽 自由",
-    difficulty: 3,
-    damage: 50,
-    openingNarrative: `七月四日。独立日。
-
-烟花在夜空中绽放。
-
-你拿着一杯啤酒，站在自家阳台上看。
-
-你想起了刚来的那个独立日——
-
-你在餐厅后厨洗盘子，只能透过小窗户看到几朵烟花。
-
-如今，烟花就在你头顶。
-
-你是美国人了吗？
-
-你也不确定。
-
-但你确定的是：这个国家给了你机会。
-
-而你，没有浪费。`,
-    rumor: {
-        title: "独立日感想",
-        content: "Reddit帖子：「移民的独立日是什么感觉？」\n\n——\n\n「从局外人到参与者，这条路很长」 [3千赞]"
-    }
-}, {
-    round: 20,
-    month: "Year2-August",
-    name: "帝国扩张",
-    theme: "🌍 全球化",
-    difficulty: 4,
-    damage: 65,
-    openingNarrative: `你的事业越做越大。
-
-不再满足于一个城市、一个行业。
-
-你开始和中国的朋友谈跨境合作，和印度的伙伴讨论外包。
-
-你意识到自己最大的优势：
-
-你是文化的桥梁。
-
-你懂得西方的商业规则，也理解东方的人情世故。
-
-在这个全球化的世界里，你就是那个rare asset——
-
-会说普通话、英语、和金钱语言的人。`,
-    rumor: {
-        title: "跨境商业",
-        content: "Reddit帖子：「华人创业者的全球化优势」\n\n——\n\n「两种文化就是两扇门，大多数人只有一扇」 [5千赞]"
-    }
-}, {
-    round: 21,
-    month: "Year2-September",
-    name: "回馈",
-    theme: "🤝 公益",
-    difficulty: 3,
-    damage: 50,
-    openingNarrative: `你收到了一封信。
-
-一个刚来美国的留学生写的，问你能不能提供一份实习。
-
-你看着信，想起了自己刚来的样子。
-
-你决定做点什么。
-
-不只是给一份实习。
-
-你要成为你当初希望遇到的那个人。`,
-    rumor: {
-        title: "回馈社区",
-        content: "Reddit帖子：「成功后你会帮助后来者吗？」\n\n——\n\n「当然。因为我还记得没人帮我时的感觉。」 [7千赞]"
-    }
-}, {
-    round: 22,
-    month: "Year2-October",
-    name: "巅峰",
-    theme: "⛰️ 登顶",
-    difficulty: 4,
-    damage: 60,
-    openingNarrative: `福布斯的记者约你采访。
-
-不是因为你最有钱——
-
-而是因为你的故事最有戏剧性。
-
-"从$10,000开始，到现在的成就。能分享一下您的秘诀吗？"
-
-你笑了笑。
-
-秘诀？
-
-活着就是秘诀。
-
-活过涨租、流感、裁员、诈骗、歧视。
-
-活过所有试图让你放弃的瞬间。
-
-然后在每一个"差一点就放弃"的时刻，选择不放弃。
-
-这就是全部的秘诀。`,
-    rumor: {
-        title: "成功故事",
-        content: "Reddit帖子：「移民成功人士AMA」\n\n——\n\n「最难的不是赚钱，是在赚到钱之前不放弃」 [1万赞]"
-    }
-}, {
-    round: 23,
-    month: "Year2-November",
-    name: "感恩",
-    theme: "🦃 回望",
-    difficulty: 3,
-    damage: 50,
-    openingNarrative: `感恩节。
-
-你家里坐满了人。
-
-有当年一起挤床位的室友，如今也有了自己的事业。
-
-有曾经帮你介绍工作的贵人。
-
-还有几个新来的留学生，就像当年的你。
-
-你举起酒杯。
-
-"感谢美国。感谢这条路上的每一个人。"
-
-"也感谢我自己。因为我他妈的撑过来了。"
-
-全场大笑。
-
-然后鼓掌。`,
-    rumor: {
-        title: "感恩节",
-        content: "Reddit帖子：「你今年最感恩什么？」\n\n——\n\n「感恩我还活着，还在追梦」 [6千赞]"
-    }
-}, {
-    round: 24,
-    month: "Year2-December",
-    name: "永恒遗产",
-    theme: "🌟 传奇",
-    difficulty: 5,
-    damage: 55,
-    openingNarrative: `又一个十二月三十一日。
-
-但这一次，你不是在出租屋看烟花。
-
-你在自己家的阳台上。
-
-身边有你在意的人。
-
-手里是一杯上好的威士忌。
-
-远处的烟花和去年一样灿烂。
-
-但看烟花的你，已经完全不同。
-
-去年你在想："能不能撑过明天？"
-
-今年你在想："明年要做些什么伟大的事？"
-
-这就是成长。
-
-这就是美国梦——
-
-不是一个目的地，而是一段永不结束的旅程。
-
-Happy New Year.
-
-Your dream continues.`
 }]
   , roundConfig = [{
     round: 1
@@ -52272,30 +51893,6 @@ Your dream continues.`
     round: 11
 }, {
     round: 12
-}, {
-    round: 13
-}, {
-    round: 14
-}, {
-    round: 15
-}, {
-    round: 16
-}, {
-    round: 17
-}, {
-    round: 18
-}, {
-    round: 19
-}, {
-    round: 20
-}, {
-    round: 21
-}, {
-    round: 22
-}, {
-    round: 23
-}, {
-    round: 24
 }]
   , missionsData = {
     debuffs: debuffs$1,
@@ -52728,7 +52325,7 @@ function checkMissionRequirements(t, n) {
 function applyRoundEndEffects(t, n) {
     return {}
 }
-const TOTAL_ROUNDS = 9999
+const TOTAL_ROUNDS = 12
   , MAX_DEBUFFS = 3
   , ATTRIBUTE_DEFINITIONS = {
     health: {
@@ -53457,7 +53054,7 @@ const _hoisted_1$7 = {
           , pe = computed( () => `https://api.dicebear.com/7.x/notionists/svg?seed=${le.value.seed}&backgroundColor=transparent`)
           , Te = computed( () => {
             var B;
-            return (((B = LOOP_CONFIG.v3) == null ? void 0 : B.roundTitles) || {})[Y.value] || `第${Math.ceil(Y.value/12)}年第${((Y.value-1)%12)+1}月`
+            return (((B = LOOP_CONFIG.v3) == null ? void 0 : B.roundTitles) || {})[Y.value] || `第${Y.value}月`
         }
         )
           , U = ref(!1)
@@ -54352,7 +53949,7 @@ const _hoisted_1$7 = {
             createElementBlock(Fragment, {
                 key: 5
             }, [createBaseVNode("header", _hoisted_10$5, [createBaseVNode("div", _hoisted_11$4, [createBaseVNode("div", _hoisted_12$4, toDisplayString(((an = Ce.value) == null ? void 0 : an.name) || Te.value), 1), createBaseVNode("div", _hoisted_13$4, " 第 " + toDisplayString(Y.value) + " 月 · " + toDisplayString(((rn = Ce.value) == null ? void 0 : rn.theme) || "生存挑战"), 1)]), createBaseVNode("div", _hoisted_14$4, [(openBlock(),
-            createElementBlock(Fragment, null, renderList(Math.min(Math.max(Y.value + 3, 12), 24), Q => createBaseVNode("div", {
+            createElementBlock(Fragment, null, renderList(12, Q => createBaseVNode("div", {
                 key: Q,
                 class: normalizeClass(["month-dot", {
                     completed: Q < Y.value,
@@ -54762,7 +54359,7 @@ const _hoisted_1$7 = {
                     }, " ✕ ")]), createBaseVNode("div", _hoisted_131, [createBaseVNode("div", _hoisted_132, [B[85] || (B[85] = createBaseVNode("div", {
                         class: "devtools-section-title"
                     }, "📅 回合跳转", -1)), createBaseVNode("div", _hoisted_133, [(openBlock(),
-                    createElementBlock(Fragment, null, renderList(36, Se => createBaseVNode("button", {
+                    createElementBlock(Fragment, null, renderList(12, Se => createBaseVNode("button", {
                         key: Se,
                         class: normalizeClass(["devtools-round-btn", {
                             active: Y.value === Se
@@ -56969,7 +56566,7 @@ ICE在追捕你，账单在等着你，而你唯一能做的就是——活下�
     type: "negative",
     trigger: {
         type: "round",
-        rounds: [3, 6, 9, 12, 15, 18, 21, 24]
+        rounds: [3, 6, 9, 12]
     },
     chance: .3,
     priority: 7,
@@ -58455,10 +58052,10 @@ function attachStageFlows(t) {
             currentEvent: null
         },
         this.s.tags = this.s.tags || {},
-        this.pushFeed(`你的美国梦之旅开始了。活下去，然后活出精彩。`, {
+        this.pushFeed(`计时开始。距离"梦碎"还有 ${LOOP_CONFIG.v3.totalRounds} 个月。`, {
             kind: "narrative"
         }),
-        this.pushFeed("开始你的美国梦之旅", {
+        this.pushFeed("生存倒计时开始", {
             kind: "narrative"
         }),
         (a = this.saveNow) == null || a.call(this)
@@ -65411,7 +65008,7 @@ W-2到了。算算这一年到底赚了多少、欠了多少。
             safe: 300,
             kill: 100
         }],
-        failureEndingId: "month24_system_death"
+        failureEndingId: "month12_system_death"
     },
     choices: [{
         id: "see_result",
@@ -65559,12 +65156,6 @@ const actionCategories = [{
     subtitle: "当心触发西大连招",
     icon: "🛋️",
     color: "#f1c40f"
-}, {
-    id: "luxury",
-    name: "上流",
-    subtitle: "成为人上人",
-    icon: "👑",
-    color: "#DAA520"
 }]
   , actionTypes = {
     fixed: {
@@ -67008,358 +66599,6 @@ const actionCategories = [{
             round: 2
         },
         tags: ["entertainment", "luxury"]
-    }],
-    luxury: [{
-        id: "LUX01",
-        name: "天使投资",
-        nameEn: "Angel Investment",
-        category: "luxury",
-        type: "random",
-        description: "投资初创公司，押注下一个独角兽",
-        quote: "硅谷的故事告诉我们，99个失败才换来1个奇迹。",
-        cost: {
-            money: 20000,
-            san: 20
-        },
-        outcomes: [{
-            name: "独角兽诞生",
-            weight: 100,
-            gain: {money: 200000, san: 30, credit: 15},
-            narrative: "你投资的公司成功上市了！投资回报率1000%！你感觉自己就是下一个Peter Thiel。"
-        }, {
-            name: "稳健增长",
-            weight: 0,
-            gain: {money: 40000, san: 10},
-            narrative: "公司稳步发展，你的投资翻了一倍。"
-        }, {
-            name: "血本无归",
-            weight: 0,
-            gain: {san: -30},
-            narrative: "创始人带着你的钱跑路了。Welcome to Silicon Valley."
-        }],
-        unlock: {
-            type: "condition",
-            condition: "money>50000"
-        },
-        tags: ["investment", "luxury", "high-risk"]
-    }, {
-        id: "LUX02",
-        name: "买商业地产",
-        nameEn: "Buy Commercial Real Estate",
-        category: "luxury",
-        type: "fixed",
-        description: "购入商业地产，坐收租金，实现被动收入",
-        quote: "Location, location, location.",
-        cost: {
-            money: 100000,
-            san: 15
-        },
-        gain: {
-            money: 25000,
-            credit: 20,
-            san: 15
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>150000"
-        },
-        tags: ["investment", "luxury", "passive-income"]
-    }, {
-        id: "LUX03",
-        name: "开连锁餐厅",
-        nameEn: "Restaurant Chain",
-        category: "luxury",
-        type: "random",
-        description: "开一家中餐连锁，用味道征服美国人的胃",
-        quote: "American Dream从一碗麻辣烫开始。",
-        cost: {
-            money: 50000,
-            san: 25
-        },
-        outcomes: [{
-            name: "网红爆火",
-            weight: 100,
-            gain: {money: 150000, san: 40, credit: 20, health: 10},
-            narrative: "你的餐厅被TikTok博主推荐了！排队排到街角！月入六位数！"
-        }, {
-            name: "稳定经营",
-            weight: 0,
-            gain: {money: 30000, san: 10, credit: 5},
-            narrative: "生意还行，足够养活自己和员工。"
-        }, {
-            name: "卫生局突击",
-            weight: 0,
-            gain: {money: -20000, san: -20, credit: -10},
-            narrative: "卫生检查不合格，被勒令停业整改。美国梦？更像美国噩梦。"
-        }],
-        unlock: {
-            type: "condition",
-            condition: "money>80000"
-        },
-        tags: ["business", "luxury"]
-    }, {
-        id: "LUX04",
-        name: "买兰博基尼",
-        nameEn: "Buy a Lamborghini",
-        category: "luxury",
-        type: "fixed",
-        description: "Aventador SVJ，V12发动机的咆哮就是你的BGM",
-        quote: "当你的车比你的房子贵，你就真的到美国了。",
-        cost: {
-            money: 80000,
-            san: 5
-        },
-        gain: {
-            san: 80,
-            credit: 25,
-            health: 15
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>100000"
-        },
-        limit: {
-            type: "once"
-        },
-        tags: ["luxury", "flex"]
-    }, {
-        id: "LUX05",
-        name: "加入乡村俱乐部",
-        nameEn: "Country Club Membership",
-        category: "luxury",
-        type: "fixed",
-        description: "年费$50,000的高尔夫乡村俱乐部，与华尔街精英做邻居",
-        quote: "真正的deal不在办公室谈，在第18洞果岭上。",
-        cost: {
-            money: 50000,
-            san: 10
-        },
-        gain: {
-            san: 60,
-            credit: 30,
-            health: 20
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>80000"
-        },
-        tags: ["luxury", "social", "networking"]
-    }, {
-        id: "LUX06",
-        name: "开科技公司",
-        nameEn: "Launch Tech Startup",
-        category: "luxury",
-        type: "random",
-        description: "拿到VC融资，你就是下一个Elon Musk",
-        quote: "Move fast and break things. Including your bank account.",
-        cost: {
-            money: 80000,
-            san: 30
-        },
-        outcomes: [{
-            name: "IPO上市",
-            weight: 100,
-            gain: {money: 500000, san: 50, credit: 30},
-            narrative: "NASDAQ敲钟那一刻，你热泪盈眶。从移民到上市公司CEO，这就是American Dream。"
-        }, {
-            name: "被收购",
-            weight: 0,
-            gain: {money: 200000, san: 20, credit: 15},
-            narrative: "Google出价收购了你的公司。虽然不是最大的梦，但也是个不错的结局。"
-        }, {
-            name: "烧光融资",
-            weight: 0,
-            gain: {money: -50000, san: -40, credit: -15},
-            narrative: "烧完了所有投资人的钱，产品还没上线。硅谷墓地又多了一座碑。"
-        }],
-        unlock: {
-            type: "condition",
-            condition: "money>120000"
-        },
-        tags: ["business", "luxury", "tech"]
-    }, {
-        id: "LUX07",
-        name: "慈善晚宴",
-        nameEn: "Charity Gala",
-        category: "luxury",
-        type: "fixed",
-        description: "花钱买张入场券，与名流谈笑风生",
-        quote: "在美国，慈善是最好的社交货币。",
-        cost: {
-            money: 30000,
-            san: 10
-        },
-        gain: {
-            san: 45,
-            credit: 35,
-            health: 10
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>60000"
-        },
-        tags: ["luxury", "social"]
-    }, {
-        id: "LUX08",
-        name: "环球私人飞机旅行",
-        nameEn: "Private Jet World Tour",
-        category: "luxury",
-        type: "fixed",
-        description: "包一架湾流G650，从纽约到巴黎到东京，用上帝视角看地球",
-        quote: "当你飞过大西洋时，你意识到世界真的很小。",
-        cost: {
-            money: 120000,
-            san: 5
-        },
-        gain: {
-            san: 100,
-            health: 40
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>200000"
-        },
-        limit: {
-            type: "once"
-        },
-        tags: ["luxury", "travel", "ultimate"]
-    }, {
-        id: "LUX09",
-        name: "买游艇",
-        nameEn: "Buy a Yacht",
-        category: "luxury",
-        type: "fixed",
-        description: "80英尺的超级游艇，在迈阿密海岸线上开Party",
-        quote: "拥有游艇的人分两种：快乐的和更快乐的。",
-        cost: {
-            money: 200000,
-            san: 5
-        },
-        gain: {
-            san: 90,
-            credit: 25,
-            health: 30
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>300000"
-        },
-        limit: {
-            type: "once"
-        },
-        tags: ["luxury", "flex", "ultimate"]
-    }, {
-        id: "LUX10",
-        name: "竞选市议员",
-        nameEn: "Run for City Council",
-        category: "luxury",
-        type: "random",
-        description: "从商界跨入政界，用权力改变世界（或者至少改变你的社区）",
-        quote: "在美国，金钱就是政治的入场券。",
-        cost: {
-            money: 150000,
-            san: 30
-        },
-        outcomes: [{
-            name: "成功当选",
-            weight: 100,
-            gain: {money: 50000, san: 60, credit: 50},
-            narrative: "你赢了！从一个移民到市议员。记者围着你拍照，CNN要采访你。这是真正的美国梦。"
-        }, {
-            name: "惜败",
-            weight: 0,
-            gain: {san: -15, credit: 10},
-            narrative: "差了200票。但整个竞选过程让你认识了很多人，也让很多人认识了你。"
-        }],
-        unlock: {
-            type: "condition",
-            condition: "credit>80"
-        },
-        tags: ["luxury", "politics", "ultimate"]
-    }, {
-        id: "EARN_HIGH01",
-        name: "FAANG高级工程师",
-        nameEn: "FAANG Senior Engineer",
-        category: "earn",
-        type: "fixed",
-        description: "Google/Meta/Apple，年薪$400K+RSU，硅谷人上人",
-        quote: "TC or GTFO.",
-        cost: {
-            san: 25
-        },
-        gain: {
-            money: 35000,
-            credit: 8
-        },
-        unlock: {
-            type: "condition",
-            condition: "money>30000"
-        },
-        tags: ["work", "tech", "high-income"]
-    }, {
-        id: "EARN_HIGH02",
-        name: "华尔街量化交易员",
-        nameEn: "Wall Street Quant Trader",
-        category: "earn",
-        type: "random",
-        description: "用数学模型在金融市场上印钞",
-        quote: "Money never sleeps.",
-        cost: {
-            san: 30
-        },
-        outcomes: [{
-            name: "年终奖爆表",
-            weight: 100,
-            gain: {money: 80000, credit: 10, san: -10},
-            narrative: "年终奖比很多人一辈子赚的都多。但你已经三个月没有好好睡过觉了。"
-        }, {
-            name: "正常水平",
-            weight: 0,
-            gain: {money: 40000, credit: 5},
-            narrative: "今年表现中规中矩，奖金还行。"
-        }, {
-            name: "爆仓",
-            weight: 0,
-            gain: {money: -30000, san: -25, credit: -10},
-            narrative: "模型失灵了。一夜之间亏掉了整个季度的利润。"
-        }],
-        unlock: {
-            type: "condition",
-            condition: "money>50000"
-        },
-        tags: ["work", "finance", "high-risk"]
-    }, {
-        id: "EARN_HIGH03",
-        name: "做自媒体网红",
-        nameEn: "Social Media Influencer",
-        category: "earn",
-        type: "random",
-        description: "拍vlog记录美国生活，靠广告和带货赚钱",
-        quote: "Don't forget to like and subscribe!",
-        cost: {
-            san: 15
-        },
-        outcomes: [{
-            name: "爆款视频",
-            weight: 100,
-            gain: {money: 50000, san: 30, credit: 15},
-            narrative: "你的视频登上了YouTube热门！品牌合作邀约接到手软！"
-        }, {
-            name: "稳定更新",
-            weight: 0,
-            gain: {money: 8000, san: 5},
-            narrative: "粉丝在缓慢增长，收入也在慢慢上来。"
-        }, {
-            name: "被网暴",
-            weight: 0,
-            gain: {money: -2000, san: -30, credit: -5},
-            narrative: "一条评论引发了网暴。你被迫关闭了评论区和私信。"
-        }],
-        unlock: {
-            type: "round",
-            round: 3
-        },
-        tags: ["work", "creative", "social-media"]
     }]
 }
   , actionsData = {
@@ -69236,7 +68475,7 @@ function attachGameV3(t) {
             rentFailed: t.s.v3.rentFailedThisRound
         }),
         t.s.v3.stats.roundsCompleted++,
-        a >= TOTAL_ROUNDS && !1)
+        a >= TOTAL_ROUNDS)
             return t._triggerV3Victory(),
             {
                 success: !0,
@@ -71697,30 +70936,6 @@ const diet = [{
         health: 10
     },
     category: "luxury"
-}, {
-    id: "diet_4",
-    level: 4,
-    name: "私人厨师",
-    description: "米其林大厨定制营养餐，有机食材空运到家",
-    flavorText: "每天早上被牛排的香味叫醒，这才是生活。",
-    icon: "👨‍🍳",
-    moneyCost: 2000,
-    effects: {
-        health: 25
-    },
-    category: "premium"
-}, {
-    id: "diet_5",
-    level: 5,
-    name: "顶级养生",
-    description: "私人营养师+顶级食材，细胞级别的健康管理",
-    flavorText: "你的营养方案比NASA宇航员的还精密。有人说你在交智商税，但你的体检报告全是绿色。",
-    icon: "🧬",
-    moneyCost: 5000,
-    effects: {
-        health: 40
-    },
-    category: "ultimate"
 }]
   , consumablesData = {
     diet
